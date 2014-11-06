@@ -32,8 +32,8 @@ Eout = length(predictions(predictions~=ytest))/ length(ytest);
 fprintf('Eout without regularization: %f\n\n', Eout);
 
 %% with regularization (problem 3 and 4)
-lambda = [10^-3 10^3]; k = size(X, 2);
-I = eye(k); I(1, 1) = 0;
+lambda = [10^-3 10^3]; l = size(X, 2);
+I = eye(l); I(1, 1) = 0;    % do not regularize the intercept term
 
 for i = 1:length(lambda)
     % use normal equations to find the weights
@@ -54,6 +54,25 @@ for i = 1:length(lambda)
         length(ytest);
     fprintf('Eout with regularization and lambda=%f: %f\n\n', lambda(i), ...
         Eout_reg);
+end
+
+%% different values of the power to achieve smallest Eout (problem 5)
+
+k = [2 1 0 -1 -2];
+for i = 1:length(k)
+    lambda = 10^k(i);    l = size(X, 2);
+    I = eye(l); I(1, 1) = 0;    % do not regularize the intercept term
+
+    % use normal equations to find the weights
+    w_reg2 = pinv(X' * X + lambda * I) * X' * y;
+    
+    predictions_reg2 = sign(Xtest * w_reg2);
+
+    % determine Eout with regularization
+    Eout_reg2 = length(predictions_reg2(predictions_reg2~=ytest))/ ...
+        length(ytest);
+    fprintf('Eout with regularization and k=%f: %f\n\n', k(i), ...
+        Eout_reg2);
 end
 
 %%
