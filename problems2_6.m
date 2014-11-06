@@ -56,7 +56,7 @@ for i = 1:length(lambda)
         Eout_reg);
 end
 
-%% different values of the power to achieve smallest Eout (problem 5)
+%% different values of the power to achieve smallest Eout (problem 5 and 6)
 
 k = [2 1 0 -1 -2];
 for i = 1:length(k)
@@ -71,8 +71,8 @@ for i = 1:length(k)
     % determine Eout with regularization
     Eout_reg2 = length(predictions_reg2(predictions_reg2~=ytest))/ ...
         length(ytest);
-    fprintf('Eout with regularization and k=%f: %f\n\n', k(i), ...
+    fprintf('Eout with regularization and k=%f: %f\n', k(i), ...
         Eout_reg2);
 end
-
+fprintf('\n');
 %%
